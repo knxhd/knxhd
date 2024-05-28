@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SSE对接方案 | 柯南小海盗</title>
+    <meta name="generator" content="VuePress 1.9.9">
+    <link rel="icon" href="/knxhd-blogs/images/icon.jpeg">
+    <meta name="description" content="柯南小海盗">
+    
+    <link rel="preload" href="/knxhd-blogs/assets/css/0.styles.93c7ef5b.css" as="style"><link rel="preload" href="/knxhd-blogs/assets/js/app.3d37aa36.js" as="script"><link rel="preload" href="/knxhd-blogs/assets/js/3.0bdce63d.js" as="script"><link rel="preload" href="/knxhd-blogs/assets/js/1.01918948.js" as="script"><link rel="preload" href="/knxhd-blogs/assets/js/25.0ce74479.js" as="script"><link rel="prefetch" href="/knxhd-blogs/assets/js/10.e1fbd169.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/11.ddae3204.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/12.5e8dd721.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/13.7716aa0b.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/14.48698322.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/15.f6c7242c.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/16.c6133951.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/17.0825ab3a.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/18.1ac9b3a7.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/19.59713067.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/20.c0191d27.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/21.84d50e0b.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/22.8a40db03.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/23.43f7f69e.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/24.71e75322.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/26.8a50cc41.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/27.e26d095f.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/28.d60baf57.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/29.ad3b54d3.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/30.2eba1a94.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/31.30dd49bc.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/32.7bed3667.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/33.695e89b1.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/34.f43deba7.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/35.ebbdfd50.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/36.946c7e82.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/37.ac11f4f8.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/38.776b3f77.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/39.cf1e754d.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/4.301eedda.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/40.3802a45d.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/41.65cf5a53.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/42.922329d7.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/43.da84b47d.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/44.03f23bcd.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/45.5e421ae6.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/46.a37f1e7a.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/47.af7473b3.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/48.6f36d39d.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/49.fc5f428b.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/5.0255ed73.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/50.78d72a97.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/51.3374b8ef.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/52.f92c48cf.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/53.f33c9f52.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/54.86456bfe.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/55.9a8018d3.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/56.841f064d.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/57.c298bafa.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/58.e37e6192.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/6.2685fa79.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/7.0556c59f.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/8.d2b23647.js"><link rel="prefetch" href="/knxhd-blogs/assets/js/9.d042cd9f.js">
+    <link rel="stylesheet" href="/knxhd-blogs/assets/css/0.styles.93c7ef5b.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container" data-v-7dd95ae2><div data-v-7dd95ae2><div class="password-shadow password-wrapper-out" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>柯南小海盗</h3> <p class="description" data-v-59e6cb88>柯南小海盗</p> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2024
+      </a></span></div></div> <div class="hide" data-v-7dd95ae2><header class="navbar" data-v-7dd95ae2><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/knxhd-blogs/" class="home-link router-link-active"><!----> <span class="site-name">柯南小海盗</span></a> <div class="links"><div class="color-picker"><a class="color-button"><i class="iconfont reco-color"></i></a> <div class="color-picker-menu" style="display:none;"><div class="mode-options"><h4 class="title">Choose mode</h4> <ul class="color-mode-options"><li class="dark">dark</li><li class="auto active">auto</li><li class="light">light</li></ul></div></div></div> <div class="search-box"><i class="iconfont reco-search"></i> <input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/knxhd-blogs/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/JAVA/" class="nav-link"><i class="undefined"></i>
+  JAVA
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/SpringBoot/" class="nav-link"><i class="undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/数据库/" class="nav-link"><i class="undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/Python/" class="nav-link"><i class="undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/Spring/" class="nav-link"><i class="undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/大数据/" class="nav-link"><i class="undefined"></i>
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/大模型/" class="nav-link"><i class="undefined"></i>
+  大模型
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/微服务/" class="nav-link"><i class="undefined"></i>
+  微服务
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/扩展知识/" class="nav-link"><i class="undefined"></i>
+  扩展知识
+</a></li></ul></div></div><div class="nav-item"><a href="/knxhd-blogs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      读书笔记
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/knxhd-blogs/blogs/读书笔记/明朝那些事儿.html" class="nav-link"><i class="undefined"></i>
+  明朝那些事儿
+</a></li></ul></div></div><div class="nav-item"><a href="/knxhd-blogs/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/knxhd-blogs/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  关于
+</a></div> <!----></nav></div></header> <div class="sidebar-mask" data-v-7dd95ae2></div> <aside class="sidebar" data-v-7dd95ae2><div class="personal-info-wrapper" data-v-1fad0c41 data-v-7dd95ae2><!----> <!----> <div class="num" data-v-1fad0c41><div data-v-1fad0c41><h3 data-v-1fad0c41>44</h3> <h6 data-v-1fad0c41>Articles</h6></div> <div data-v-1fad0c41><h3 data-v-1fad0c41>28</h3> <h6 data-v-1fad0c41>Tags</h6></div></div> <ul class="social-links" data-v-1fad0c41></ul> <hr data-v-1fad0c41></div> <nav class="nav-links"><div class="nav-item"><a href="/knxhd-blogs/" class="nav-link"><i class="iconfont reco-home"></i>
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="iconfont reco-category"></i>
+      博客
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/JAVA/" class="nav-link"><i class="undefined"></i>
+  JAVA
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/SpringBoot/" class="nav-link"><i class="undefined"></i>
+  SpringBoot
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/前端/" class="nav-link"><i class="undefined"></i>
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/数据库/" class="nav-link"><i class="undefined"></i>
+  数据库
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/Python/" class="nav-link"><i class="undefined"></i>
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/Spring/" class="nav-link"><i class="undefined"></i>
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/大数据/" class="nav-link"><i class="undefined"></i>
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/大模型/" class="nav-link"><i class="undefined"></i>
+  大模型
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/微服务/" class="nav-link"><i class="undefined"></i>
+  微服务
+</a></li><li class="dropdown-item"><!----> <a href="/knxhd-blogs/categories/扩展知识/" class="nav-link"><i class="undefined"></i>
+  扩展知识
+</a></li></ul></div></div><div class="nav-item"><a href="/knxhd-blogs/tag/" class="nav-link"><i class="iconfont reco-tag"></i>
+  标签
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><a class="dropdown-title"><span class="title"><i class="undefined"></i>
+      读书笔记
+    </span> <span class="arrow right"></span></a> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/knxhd-blogs/blogs/读书笔记/明朝那些事儿.html" class="nav-link"><i class="undefined"></i>
+  明朝那些事儿
+</a></li></ul></div></div><div class="nav-item"><a href="/knxhd-blogs/timeline/" class="nav-link"><i class="iconfont reco-date"></i>
+  时间轴
+</a></div><div class="nav-item"><a href="/knxhd-blogs/about/" class="nav-link"><i class="iconfont reco-account"></i>
+  关于
+</a></div> <!----></nav> <ul class="sidebar-links"><li><section class="sidebar-group collapsable depth-0"><p class="sidebar-heading open"><span>JAVA</span> <span class="arrow down"></span></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/knxhd-blogs/blogs/JAVA/JVM.html" class="sidebar-link">垃圾回收器</a></li><li><a href="/knxhd-blogs/blogs/JAVA/Oauth2.0.html" class="sidebar-link">Oauth2.0实战和Spring Security整合</a></li><li><a href="/knxhd-blogs/blogs/JAVA/java内存模型.html" class="sidebar-link">java内存模型</a></li><li><a href="/knxhd-blogs/blogs/JAVA/java基础知识.html" class="sidebar-link">static为什么不能引用成员变量</a></li><li><a href="/knxhd-blogs/blogs/JAVA/多数据源配置.html" class="sidebar-link">SpringBoot多数据源配置</a></li><li><a href="/knxhd-blogs/blogs/JAVA/流式接口.html" class="active sidebar-link">SSE对接方案</a></li></ul></section></li></ul> </aside> <div class="password-shadow password-wrapper-in" style="display:none;" data-v-59e6cb88 data-v-7dd95ae2><h3 class="title" data-v-59e6cb88>SSE对接方案</h3> <!----> <label id="box" class="inputBox" data-v-59e6cb88><input type="password" value="" data-v-59e6cb88> <span data-v-59e6cb88>Konck! Knock!</span> <button data-v-59e6cb88>OK</button></label> <div class="footer" data-v-59e6cb88><span data-v-59e6cb88><i class="iconfont reco-theme" data-v-59e6cb88></i> <a target="blank" href="https://vuepress-theme-reco.recoluan.com" data-v-59e6cb88>vuePress-theme-reco</a></span> <span data-v-59e6cb88><i class="iconfont reco-copyright" data-v-59e6cb88></i> <a data-v-59e6cb88><!---->
+          
+        <!---->
+        2024
+      </a></span></div></div> <div data-v-7dd95ae2><div data-v-7dd95ae2><main class="page"><section style="display:;"><div class="page-title"><h1 class="title">SSE对接方案</h1> <div data-v-8a445198><!----> <i class="iconfont reco-date" data-v-8a445198><span data-v-8a445198>5/21/2024</span></i> <!----> <i class="tags iconfont reco-tag" data-v-8a445198><span class="tag-item" data-v-8a445198>网络编程</span></i></div></div> <div class="theme-reco-content content__default"><h2 id="java"><a href="#java" class="header-anchor">#</a> JAVA</h2> <h3 id="请求参数"><a href="#请求参数" class="header-anchor">#</a> 请求参数</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Data</span>
+<span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token annotation punctuation">@AllArgsConstructor</span>
+<span class="token annotation punctuation">@Builder</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">RequestParam</span> <span class="token punctuation">{</span>
+
+    <span class="token comment">/**
+     * 模型源，自研、微软、讯飞等
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> source<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 大模型调用内容
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> query<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 用户ID，用于上下文对话状态管理
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> userId<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 场景，例如：备忘录，AI绘画等
+     * &lt;p&gt;
+     * 根据不同场景获取不同的提示词
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> scene <span class="token operator">=</span> <span class="token string">&quot;common&quot;</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 应用，和scene结合使用，例如：AI绘本(应用)下的生成故事脚本(场景)
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">String</span> application <span class="token operator">=</span> <span class="token string">&quot;common&quot;</span><span class="token punctuation">;</span>
+
+
+    <span class="token comment">/**
+     * 是否流式接口
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> stream <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 是否使用上下文
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">boolean</span> context <span class="token operator">=</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 上下文x轮数据，最多10轮，默认35轮
+     * 可为空
+     */</span>
+    <span class="token keyword">private</span> <span class="token keyword">int</span> limit <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 额外的参数，可用于填充提示词中的占位符
+     * 非必须
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> extraParam<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 额外的请求头部数据
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> extraHeader<span class="token punctuation">;</span>
+
+
+    <span class="token comment">/**
+     * 最大的token数
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> max_tokens<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 温度
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">FLOAD</span> temperature<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 频率惩罚
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> frequency_penalty<span class="token punctuation">;</span>
+
+    <span class="token comment">/**
+     * 存在惩罚
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">Integer</span> presence_penalty<span class="token punctuation">;</span>
+
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> sequence<span class="token punctuation">;</span>
+
+
+    <span class="token comment">/**
+     * 前top
+     */</span>
+    <span class="token keyword">private</span> <span class="token class-name">FLOAD</span> top_p<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="返回结果"><a href="#返回结果" class="header-anchor">#</a> 返回结果</h3> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@Data</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Result</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">T</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">String</span> message<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token keyword">int</span> code<span class="token punctuation">;</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">T</span> data<span class="token punctuation">;</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="流式接口"><a href="#流式接口" class="header-anchor">#</a> 流式接口</h3> <h4 id="引入依赖"><a href="#引入依赖" class="header-anchor">#</a> 引入依赖</h4> <div class="language-xml extra-class"><pre class="language-xml"><code> <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.asynchttpclient<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>async-http-client<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+ 	<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>2.12.3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.projectlombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+   <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>lombok<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>fastjson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>3.5.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h4 id="调用接口"><a href="#调用接口" class="header-anchor">#</a> 调用接口</h4> <h4 id="消息处理类"><a href="#消息处理类" class="header-anchor">#</a> 消息处理类</h4> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">DefaultMessageHandler</span> <span class="token keyword">implements</span> <span class="token class-name">AsyncHandler</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&gt;</span></span> <span class="token punctuation">{</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">State</span> <span class="token function">onStatusReceived</span><span class="token punctuation">(</span><span class="token class-name">HttpResponseStatus</span> httpResponseStatus<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">State</span> <span class="token function">onHeadersReceived</span><span class="token punctuation">(</span><span class="token class-name">HttpHeaders</span> httpHeaders<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">State</span> <span class="token function">onBodyPartReceived</span><span class="token punctuation">(</span><span class="token class-name">HttpResponseBodyPart</span> httpResponseBodyPart<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">byte</span><span class="token punctuation">[</span><span class="token punctuation">]</span> bodyPartBytes <span class="token operator">=</span> httpResponseBodyPart<span class="token punctuation">.</span><span class="token function">getBodyPartBytes</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">String</span> messageBody <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">String</span><span class="token punctuation">(</span>bodyPartBytes<span class="token punctuation">,</span> <span class="token class-name">StandardCharsets</span><span class="token punctuation">.</span><span class="token constant">UTF_8</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>messageBody<span class="token punctuation">.</span><span class="token function">trim</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isEmpty</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 跳过空行数据</span>
+            <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+        <span class="token comment">// 剔除数据行的行开头&quot;data: &quot;</span>
+        <span class="token class-name">String</span> data <span class="token operator">=</span> messageBody<span class="token punctuation">.</span><span class="token function">replaceFirst</span><span class="token punctuation">(</span><span class="token string">&quot;^data:&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>data<span class="token punctuation">.</span><span class="token function">length</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">&gt;</span> <span class="token number">0</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">Result</span> result <span class="token operator">=</span> <span class="token class-name">JSONObject</span><span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>messageBody<span class="token punctuation">,</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">&quot;大模型接收到消息：%s&quot;</span><span class="token punctuation">,</span> result<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span> <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token operator">-</span><span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">.</span><span class="token function">format</span><span class="token punctuation">(</span><span class="token string">&quot;大模型接收消息结束：%s&quot;</span><span class="token punctuation">,</span> result<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span>
+
+        <span class="token keyword">return</span> <span class="token class-name">State</span><span class="token punctuation">.</span><span class="token constant">CONTINUE</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">onThrowable</span><span class="token punctuation">(</span><span class="token class-name">Throwable</span> throwable<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+
+    <span class="token punctuation">}</span>
+
+    <span class="token annotation punctuation">@Override</span>
+    <span class="token keyword">public</span> <span class="token class-name">Response</span> <span class="token function">onCompleted</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">return</span> <span class="token keyword">null</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre></div><h4 id="主方法"><a href="#主方法" class="header-anchor">#</a> 主方法</h4> <div class="language-java extra-class"><pre class="language-java"><code><span class="token annotation punctuation">@NoArgsConstructor</span>
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">HttpStreamClient</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">private</span> <span class="token class-name">AsyncHandler</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&gt;</span></span> asyncHandler<span class="token punctuation">;</span>
+
+    <span class="token keyword">public</span> <span class="token class-name">HttpStreamClient</span><span class="token punctuation">(</span><span class="token class-name">AsyncHandler</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">&gt;</span></span> asyncHandler<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>asyncHandler <span class="token operator">=</span> asyncHandler<span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">sendMessage</span><span class="token punctuation">(</span><span class="token class-name">String</span> url<span class="token punctuation">,</span> <span class="token class-name">String</span> message<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// 组装okhttp请求</span>
+        <span class="token class-name">AsyncHttpClient</span> client <span class="token operator">=</span> <span class="token class-name">Dsl</span><span class="token punctuation">.</span><span class="token function">asyncHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">BoundRequestBuilder</span> requestBuilder <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">preparePost</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestBuilder<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Accept&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;text/event-stream&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestBuilder<span class="token punctuation">.</span><span class="token function">setHeader</span><span class="token punctuation">(</span><span class="token string">&quot;Content-Type&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application/json&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestBuilder<span class="token punctuation">.</span><span class="token function">setBody</span><span class="token punctuation">(</span>message<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestBuilder<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span>asyncHandler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">DefaultMessageHandler</span> defaultMessageHandler <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">DefaultMessageHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">HttpStreamClient</span> httpStreamClient <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpStreamClient</span><span class="token punctuation">(</span>defaultMessageHandler<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">RequestParam</span> requestParam <span class="token operator">=</span> <span class="token class-name">RequestParam</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">userId</span><span class="token punctuation">(</span><span class="token string">&quot;tianluhua&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span><span class="token string">&quot;CHAT_GPT&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">stream</span><span class="token punctuation">(</span><span class="token boolean">true</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        httpStreamClient<span class="token punctuation">.</span><span class="token function">sendMessage</span><span class="token punctuation">(</span><span class="token string">&quot;http://127.0.0.1:8087/llm/invokeLlm&quot;</span><span class="token punctuation">,</span> 			                                                        <span class="token class-name">JSONObject</span><span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>requestParam<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h3 id="非流式接口"><a href="#非流式接口" class="header-anchor">#</a> 非流式接口</h3> <h4 id="resttemplate形式"><a href="#resttemplate形式" class="header-anchor">#</a> RestTemplate形式</h4> <h5 id="引入依赖-2"><a href="#引入依赖-2" class="header-anchor">#</a> 引入依赖</h5> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-web<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>fastjson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>3.5.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h5 id="调用接口-2"><a href="#调用接口-2" class="header-anchor">#</a> 调用接口</h5> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">Demo</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">SimpleClientHttpRequestFactory</span> requestFactory <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">SimpleClientHttpRequestFactory</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 时间函数</span>
+        requestFactory<span class="token punctuation">.</span><span class="token function">setConnectTimeout</span><span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestFactory<span class="token punctuation">.</span><span class="token function">setReadTimeout</span><span class="token punctuation">(</span><span class="token number">2</span> <span class="token operator">*</span> <span class="token number">60</span> <span class="token operator">*</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">//内部实际实现为 HttpClient</span>
+        <span class="token class-name">RestTemplate</span> restTemplate <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">RestTemplate</span><span class="token punctuation">(</span>requestFactory<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 设置编码集</span>
+        <span class="token class-name">List</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">HttpMessageConverter</span><span class="token punctuation">&lt;</span><span class="token operator">?</span><span class="token punctuation">&gt;</span><span class="token punctuation">&gt;</span></span> messageConverters <span class="token operator">=</span> restTemplate<span class="token punctuation">.</span><span class="token function">getMessageConverters</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token comment">// 设置StringHttpMessageConverter为UTF-8</span>
+        messageConverters<span class="token punctuation">.</span><span class="token function">removeIf</span><span class="token punctuation">(</span>httpMessageConverter <span class="token operator">-&gt;</span> httpMessageConverter <span class="token keyword">instanceof</span> <span class="token class-name">StringHttpMessageConverter</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        messageConverters<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">new</span> <span class="token class-name">StringHttpMessageConverter</span><span class="token punctuation">(</span><span class="token class-name">StandardCharsets</span><span class="token punctuation">.</span><span class="token constant">UTF_8</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">FastJsonHttpMessageConverter</span> fastJsonHttpMessageConverter <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FastJsonHttpMessageConverter</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">FastJsonConfig</span> fastJsonConfig <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">FastJsonConfig</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fastJsonConfig<span class="token punctuation">.</span><span class="token function">setSerializerFeatures</span><span class="token punctuation">(</span>
+                <span class="token class-name">SerializerFeature<span class="token punctuation">.</span>WriteMapNullValue</span><span class="token punctuation">,</span>
+                <span class="token class-name">SerializerFeature<span class="token punctuation">.</span>WriteNullStringAsEmpty</span><span class="token punctuation">,</span>
+                <span class="token class-name">SerializerFeature<span class="token punctuation">.</span>WriteNullListAsEmpty</span><span class="token punctuation">,</span>
+                <span class="token class-name">SerializerFeature<span class="token punctuation">.</span>DisableCircularReferenceDetect</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        fastJsonHttpMessageConverter<span class="token punctuation">.</span><span class="token function">setFastJsonConfig</span><span class="token punctuation">(</span>fastJsonConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        messageConverters<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>fastJsonHttpMessageConverter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        restTemplate<span class="token punctuation">.</span><span class="token function">setErrorHandler</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">DefaultResponseErrorHandler</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+
+        <span class="token class-name">Map</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">&gt;</span></span> headerMap <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HashMap</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        headerMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">&quot;content-type&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application/json; charset=utf-8&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        headerMap<span class="token punctuation">.</span><span class="token function">put</span><span class="token punctuation">(</span><span class="token string">&quot;Accept&quot;</span><span class="token punctuation">,</span> <span class="token string">&quot;application/json; charset=utf-8&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">HttpHeaders</span> requestHeaders <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        requestHeaders<span class="token punctuation">.</span><span class="token function">setAll</span><span class="token punctuation">(</span>headerMap<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">RequestParam</span> requestParam <span class="token operator">=</span> <span class="token class-name">RequestParam</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">userId</span><span class="token punctuation">(</span><span class="token string">&quot;tianluhua&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span><span class="token string">&quot;CHAT_GPT&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+
+        <span class="token class-name">HttpEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">&gt;</span></span> requestEntity <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">HttpEntity</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token punctuation">&gt;</span></span><span class="token punctuation">(</span>requestParam<span class="token punctuation">,</span> requestHeaders<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name">Result</span> result <span class="token operator">=</span> restTemplate<span class="token punctuation">.</span><span class="token function">postForObject</span><span class="token punctuation">(</span><span class="token string">&quot;http://127.0.0.1:8087/llm/invokeLlm&quot;</span><span class="token punctuation">,</span> requestEntity<span class="token punctuation">,</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;大模型返回结果：&quot;</span> <span class="token operator">+</span> result<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+</code></pre></div><h4 id="okhttp"><a href="#okhttp" class="header-anchor">#</a> OKHttp</h4> <h5 id="引入依赖-3"><a href="#引入依赖-3" class="header-anchor">#</a> 引入依赖</h5> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.squareup.okhttp3<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>okhttp<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>4.10.0<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+ <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>dependency</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>com.alibaba<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>fastjson<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>3.5.2<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>dependency</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div><h5 id="调用接口-3"><a href="#调用接口-3" class="header-anchor">#</a> 调用接口</h5> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">OkHttpDemo</span> <span class="token punctuation">{</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token class-name">String</span> url <span class="token operator">=</span> <span class="token string">&quot;http://127.0.0.1:8087/llm/invokeLlm&quot;</span><span class="token punctuation">;</span>
+        <span class="token comment">// 组装请求体参数</span>
+        <span class="token class-name">RequestParam</span> requestParam <span class="token operator">=</span> <span class="token class-name">RequestParam</span><span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">userId</span><span class="token punctuation">(</span><span class="token string">&quot;tianluhua&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">source</span><span class="token punctuation">(</span><span class="token string">&quot;CHAT_GPT&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">query</span><span class="token punctuation">(</span><span class="token string">&quot;你好&quot;</span><span class="token punctuation">)</span>
+                <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token comment">// 组装okhttp请求</span>
+        <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>OkHttpClient</span> client <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>OkHttpClient</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">newBuilder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>MediaType</span> mediaType <span class="token operator">=</span> <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>MediaType</span><span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token string">&quot;application/json&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>RequestBody</span> body <span class="token operator">=</span> <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>RequestBody</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">toJSONString</span><span class="token punctuation">(</span>requestParam<span class="token punctuation">)</span><span class="token punctuation">,</span> mediaType<span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>Request</span> request <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>Request<span class="token punctuation">.</span>Builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">url</span><span class="token punctuation">(</span>url<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">method</span><span class="token punctuation">(</span><span class="token string">&quot;POST&quot;</span><span class="token punctuation">,</span> body<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">try</span> <span class="token punctuation">{</span>
+            <span class="token comment">// 执行请求</span>
+            <span class="token class-name"><span class="token namespace">okhttp3<span class="token punctuation">.</span></span>Response</span> response <span class="token operator">=</span> client<span class="token punctuation">.</span><span class="token function">newCall</span><span class="token punctuation">(</span>request<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 获取响应内容</span>
+            <span class="token class-name">String</span> respStr <span class="token operator">=</span> <span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>util<span class="token punctuation">.</span></span>Objects</span><span class="token punctuation">.</span><span class="token function">requireNonNull</span><span class="token punctuation">(</span>response<span class="token punctuation">.</span><span class="token function">body</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">string</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token comment">// 序列化Json为Java对象</span>
+            <span class="token class-name">Result</span> result <span class="token operator">=</span> <span class="token constant">JSON</span><span class="token punctuation">.</span><span class="token function">parseObject</span><span class="token punctuation">(</span>respStr<span class="token punctuation">,</span> <span class="token class-name">Result</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">if</span> <span class="token punctuation">(</span>result<span class="token punctuation">.</span><span class="token function">getCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">200</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+                <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;大模型返回结果：&quot;</span> <span class="token operator">+</span> result<span class="token punctuation">.</span><span class="token function">getData</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">}</span>
+        <span class="token punctuation">}</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name"><span class="token namespace">java<span class="token punctuation">.</span>io<span class="token punctuation">.</span></span>IOException</span> <span class="token operator">|</span> <span class="token class-name">IndexOutOfBoundsException</span> e<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+            <span class="token comment">// TODO 记录请求异常信息</span>
+            e<span class="token punctuation">.</span><span class="token function">printStackTrace</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">&quot;&quot;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+
+<span class="token punctuation">}</span>
+</code></pre></div></div></section> <footer class="page-edit"><!----> <!----></footer> <div class="page-nav"><p class="inner"><span class="prev"><a href="/knxhd-blogs/blogs/JAVA/多数据源配置.html" class="prev">
+          SpringBoot多数据源配置
+        </a></span> <!----></p></div> <div class="comments-wrapper"><!----></div></main></div> <!----></div> <ul class="sub-sidebar sub-sidebar-wrapper" style="width:12rem;" data-v-b57cc07c data-v-7dd95ae2><li class="level-2" data-v-b57cc07c><a href="/knxhd-blogs/blogs/JAVA/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3.html#java" class="sidebar-link reco-side-java" data-v-b57cc07c>JAVA</a></li><li class="level-3" data-v-b57cc07c><a href="/knxhd-blogs/blogs/JAVA/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3.html#请求参数" class="sidebar-link reco-side-请求参数" data-v-b57cc07c>请求参数</a></li><li class="level-3" data-v-b57cc07c><a href="/knxhd-blogs/blogs/JAVA/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3.html#返回结果" class="sidebar-link reco-side-返回结果" data-v-b57cc07c>返回结果</a></li><li class="level-3" data-v-b57cc07c><a href="/knxhd-blogs/blogs/JAVA/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3.html#流式接口" class="sidebar-link reco-side-流式接口" data-v-b57cc07c>流式接口</a></li><li class="level-3" data-v-b57cc07c><a href="/knxhd-blogs/blogs/JAVA/%E6%B5%81%E5%BC%8F%E6%8E%A5%E5%8F%A3.html#非流式接口" class="sidebar-link reco-side-非流式接口" data-v-b57cc07c>非流式接口</a></li></ul></div></div></div><div class="global-ui"><div class="back-to-ceiling" style="right:1rem;bottom:6rem;width:2.5rem;height:2.5rem;border-radius:.25rem;line-height:2.5rem;display:none;" data-v-c6073ba8 data-v-c6073ba8><svg t="1574745035067" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5404" class="icon" data-v-c6073ba8><path d="M526.60727968 10.90185116a27.675 27.675 0 0 0-29.21455937 0c-131.36607665 82.28402758-218.69155461 228.01873535-218.69155402 394.07834331a462.20625001 462.20625001 0 0 0 5.36959153 69.94390903c1.00431239 6.55289093-0.34802892 13.13561351-3.76865779 18.80351572-32.63518765 54.11355614-51.75690182 118.55860487-51.7569018 187.94566865a371.06718723 371.06718723 0 0 0 11.50484808 91.98906777c6.53300375 25.50556257 41.68394495 28.14064038 52.69160883 4.22606766 17.37162448-37.73630017 42.14135425-72.50938081 72.80769204-103.21549295 2.18761121 3.04276886 4.15646224 6.24463696 6.40373557 9.22774369a1871.4375 1871.4375 0 0 0 140.04691725 5.34970492 1866.36093723 1866.36093723 0 0 0 140.04691723-5.34970492c2.24727335-2.98310674 4.21612437-6.18497483 6.3937923-9.2178004 30.66633723 30.70611158 55.4360664 65.4791928 72.80769147 103.21549355 11.00766384 23.91457269 46.15860503 21.27949489 52.69160879-4.22606768a371.15156223 371.15156223 0 0 0 11.514792-91.99901164c0-69.36717486-19.13165746-133.82216804-51.75690182-187.92578088-3.42062944-5.66790279-4.76302748-12.26056868-3.76865837-18.80351632a462.20625001 462.20625001 0 0 0 5.36959269-69.943909c-0.00994388-166.08943902-87.32547796-311.81420293-218.6915546-394.09823051zM605.93803103 357.87693858a93.93749974 93.93749974 0 1 1-187.89594924 6.1e-7 93.93749974 93.93749974 0 0 1 187.89594924-6.1e-7z" p-id="5405" data-v-c6073ba8></path><path d="M429.50777625 765.63860547C429.50777625 803.39355007 466.44236686 1000.39046097 512.00932183 1000.39046097c45.56695499 0 82.4922232-197.00623328 82.5015456-234.7518555 0-37.75494459-36.9345906-68.35043303-82.4922232-68.34111062-45.57627738-0.00932239-82.52019037 30.59548842-82.51086798 68.34111062z" p-id="5406" data-v-c6073ba8></path></svg></div><canvas id="vuepress-canvas-cursor"></canvas></div></div>
+    <script src="/knxhd-blogs/assets/js/app.3d37aa36.js" defer></script><script src="/knxhd-blogs/assets/js/3.0bdce63d.js" defer></script><script src="/knxhd-blogs/assets/js/1.01918948.js" defer></script><script src="/knxhd-blogs/assets/js/25.0ce74479.js" defer></script>
+  </body>
+</html>
